@@ -11,6 +11,7 @@ class LineChart{
   
   float theSpace;
   float theXGap;
+  ArrayList<PVector> plotPoints;
   
   LineChart(String title){
     this.title = title;
@@ -20,6 +21,25 @@ class LineChart{
     this.position = new PVector(10, 10);
     this.theSpace = 50.0f;
     this.theXGap = textWidth(str((float)this.xScale.y/2));
+    this.plotPoints = new ArrayList<PVector>();
+  }
+  
+  void addPlotPoint(float xPoint, float yPoint){
+    this.plotPoints.add(new PVector(xPoint, yPoint));
+  }
+  
+  void addPlotPoints(PVector[] vectorPoints){
+    for(int i = 0; i < vectorPoints.length; i++){
+      this.plotPoints.add(vectorPoints[i]);
+    }
+  }
+  
+  void setPlotPoints(ArrayList<PVector> vectorPoints){
+    this.plotPoints = vectorPoints;
+  }
+  
+  void clearPlotPoints(){
+    this.plotPoints.clear();
   }
   
   void setXLabel(String label){
@@ -106,6 +126,16 @@ class LineChart{
       
       float numWidth = (float)textWidth(stringCurrentNum);
       text(stringCurrentNum, xPos1-(numWidth/2), yPos+5);
+    }
+  }
+  
+  void renderPlotPoints(){
+    for(int i = 0; i < this.plotPoints.size(); i++){
+      float xPoint = this.plotPoints.get(i).x;
+      float yPoint = this.plotPoints.get(i).y;
+      stroke(255);
+      strokeWeight(10);
+      point(xPoint, yPoint);
     }
   }
 }
